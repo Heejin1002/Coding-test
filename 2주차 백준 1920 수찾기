@@ -1,0 +1,26 @@
+def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:  # 중간 값이 찾는 값과 같으면 1 반환
+            return 1
+        elif arr[mid] < target:  # 중간 값이 찾는 값보다 작으면 오른쪽을 탐색
+            left = mid + 1
+        else:  # 중간 값이 찾는 값보다 크면 왼쪽을 탐색
+            right = mid - 1
+    return 0  # 찾는 값이 없으면 0 반환
+
+# 입력 받기
+n = int(input())  # 수열 A의 크기
+arr = list(map(int, input().split()))  # 수열 A
+m = int(input())  # 수열 B의 크기
+search_list = list(map(int, input().split()))  # 수열 B
+
+# 수열 A 정렬
+arr.sort()
+
+# 각 수열 B의 원소에 대해 이진 탐색 수행
+for target in search_list:
+    print(binary_search(arr, target))
