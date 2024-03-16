@@ -1,0 +1,41 @@
+# 주어진 랜선의 길이를 바탕으로 목표하는 랜선 개수를 계산하는 함수
+def count_lan_cables(cables, target):
+    count = 0
+    for cable in cables:
+        # 랜선을 자른 개수를 더함
+        count += cable // target
+    return count
+
+# 이진 탐색을 수행하여 최적의 랜선 길이를 찾는 함수
+def binary_search(cables, n):
+    # 탐색 범위의 시작과 끝을 설정
+    left = 1  # 랜선의 길이는 양수이므로 최소 길이는 1로 설정
+    right = max(cables)  # 최대 길이는 주어진 랜선 중 가장 긴 길이로 설정
+    result = 0  # 최적의 랜선 길이를 저장할 변수
+
+    # 이진 탐색 수행
+    while left <= right:
+        # 중간값 계산
+        mid = (left + right) // 2
+        # 현재 길이로 얻을 수 있는 랜선의 개수 계산
+        count = count_lan_cables(cables, mid)
+
+        # 목표하는 랜선 개수보다 많은 랜선을 얻을 수 있다면
+        if count >= n:
+            # 현재 길이를 결과에 저장하고, 더 큰 길이를 탐색하기 위해 left를 증가시킴
+            result = mid
+            left = mid + 1
+        # 목표하는 랜선 개수보다 더 적은 랜선을 얻을 수 있다면
+        else:
+            # 더 짧은 길이를 탐색하기 위해 right를 감소시킴
+            right = mid - 1
+
+    # 최적의 랜선 길이 반환
+    return result
+
+# 입력 받기
+k, n = map(int, input().split())
+cables = [int(input()) for _ in range(k)]
+
+# 이진 탐색을 수행하여 최적의 랜선 길이를 찾고, 결과 출력
+print(binary_search(cables, n))
