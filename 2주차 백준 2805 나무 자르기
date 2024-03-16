@@ -1,0 +1,27 @@
+# 나무의 높이가 주어졌을 때, 잘라낸 나무들의 높이의 합이 목표로 하는 길이 이상인지 확인하는 함수
+def check_height(trees, target_height):
+    total = 0
+    for tree in trees:
+        if tree > target_height:
+            total += tree - target_height
+    return total
+
+# 이진 탐색을 수행하여 최적의 나무 높이를 찾는 함수
+def binary_search(trees, target, start, end):
+    result = 0
+    while start <= end:
+        mid = (start + end) // 2
+        total = check_height(trees, mid)
+        if total >= target:
+            result = mid
+            start = mid + 1
+        else:
+            end = mid - 1
+    return result
+
+# 입력 받기
+n, m = map(int, input().split())  # 나무의 수와 목표로 하는 나무의 길이 입력
+trees = list(map(int, input().split()))  # 각 나무의 높이 입력
+
+# 이진 탐색을 수행하여 최적의 나무 높이를 찾고, 결과 출력
+print(binary_search(trees, m, 0, max(trees)))
