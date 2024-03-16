@@ -1,0 +1,26 @@
+from bisect import bisect_left, bisect_right
+
+def count_num_cards(cards, target):
+    left_index = bisect_left(cards, target)  # target 이상인 가장 작은 인덱스
+    right_index = bisect_right(cards, target)  # target 초과인 가장 작은 인덱스
+    return right_index - left_index  # target 숫자의 개수 반환
+
+def solution(cards, targets):
+    cards.sort()  # 이진 탐색을 위해 배열을 정렬
+
+    answer = []
+    for target in targets:
+        count = count_num_cards(cards, target)
+        answer.append(count)
+    
+    return answer
+
+# 입력
+n = int(input())  # 숫자 카드 묶음의 개수
+cards = list(map(int, input().split()))  # 숫자 카드 묶음
+m = int(input())  # 탐색할 숫자 개수
+targets = list(map(int, input().split()))  # 탐색할 숫자들
+
+# 결과 출력
+result = solution(cards, targets)
+print(*result)
